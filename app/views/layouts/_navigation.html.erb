@@ -14,15 +14,22 @@
           Dropdown
         </a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="http://localhost:3000/articles/new">Create a new article</a></li>
-            <li><a class="dropdown-item" href="http://localhost:3000/articles">View articles</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <% if logged_in? %>
+              <li><%= link_to "Create a new article", new_article_path, class: "dropdown-item" %></li>
+            <% end %>
+            <li><%= link_to "View articles", articles_path, class: "dropdown-item" %></li>
           </ul>
       </li>
 
       <% if logged_in? %>
-        <li class="nav-item">
-          <%= link_to current_user.username, user_path(current_user), class: "nav-link" %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Profile [<%= current_user.username%>]
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><%= link_to "View your profile", user_path(current_user), class: "dropdown-item" %></li>
+            <li><%= link_to "Edit your profile", edit_user_path(current_user), class: "dropdown-item" %></li>
+          </ul>
         </li>
         <li class="nav-item">
           <%= link_to 'Logout', logout_path, class: "nav-link", data: { turbo_method: "delete", turbo_confirm: "ログアウトしますか？" } %>
